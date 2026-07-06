@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/chroma_db:/app/chroma_db
+      - ./backend/temp_uploads:/app/temp_uploads
+    # In production you wouldn't use host networking for Ollama, but since Ollama is running natively 
+    # on the host machine for GPU access, we use host.docker.internal to reach it.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      # If SSR is used to fetch from backend, it needs the backend service name.
+      # But since we use client-side fetching in page.tsx, it hits localhost.
+      - NEXT_PUBLIC_API_URL=http://localhost:8000

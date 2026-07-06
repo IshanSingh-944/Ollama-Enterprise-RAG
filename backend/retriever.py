@@ -1,10 +1,11 @@
 from langchain_community.llms import Ollama
 from langchain_core.prompts import PromptTemplate
 from ingestor import get_vector_store
+import os
 
 # Configuration for Ollama
 OLLAMA_MODEL = "llama3" # You can change this to "medllama2" if you have it pulled
-OLLAMA_BASE_URL = "http://localhost:11434"
+OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 
 # Custom System Prompt tailored for Medical Data (Domain Agnostic, but strict)
 RAG_PROMPT_TEMPLATE = """
