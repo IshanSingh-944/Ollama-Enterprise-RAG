@@ -36,8 +36,8 @@ Spin up the entire stack (FastAPI Backend, ChromaDB, and Next.js Frontend) using
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/IshanSingh-944/Ollama-Enterprise-RAG
+cd Ollama-Enterprise-RAG
 
 # Start the services
 docker-compose up --build
